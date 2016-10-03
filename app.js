@@ -7,7 +7,9 @@ Declare Data
 
 var setsDisplayed = 0;
 var printSets = document.getElementById('products');
-var productClicks = document.getElementById('products')
+console.log(printSets);
+var productClicks = document.getElementById('products');
+console.log(productClicks);
 var products = [];
 var randomNumberSets = [];
 
@@ -65,7 +67,7 @@ function genRandomImage(max) {
     var liEl = document.createElement('li');
     var imgEl = document.createElement('img');
     imgEl.src = products[randomNumber].imageLocation;
-    liEl.setAttribute('id','productnumber_' + products[randomNumber].productNumber);
+    imgEl.setAttribute('alt', products[randomNumber].productNumber);
     liEl.setAttribute('class',classes[i]);
     liEl.appendChild(imgEl);
     ulEl.appendChild(liEl);
@@ -82,6 +84,9 @@ function genRandomImage(max) {
 
 function clickListener (event) {
   console.log('Click listener fires!');
+  var clickedProduct = event.target.alt;
+  console.log(clickedProduct);
+  products[clickedProduct].numberOfTimesClicked += 1;
   genRandomImage(products.length);
 }
 /************************
