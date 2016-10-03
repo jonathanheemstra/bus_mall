@@ -57,16 +57,22 @@ function genRandomImage(max) {
   printSets.innerHTML = '';
   var ulEl = document.createElement('ul');
   var randomNumbersGenerated = [];
+  var classes = ['left','center','right'];
+
   for (var i = 0; i < 3; i++) {
     var randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
     console.log('Random Product ' + (i + 1) + ': ' + randomNumber);
     var liEl = document.createElement('li');
     var imgEl = document.createElement('img');
     imgEl.src = products[randomNumber].imageLocation;
+    liEl.setAttribute('id','productnumber_' + products[randomNumber].productNumber);
+    liEl.setAttribute('class',classes[i]);
     liEl.appendChild(imgEl);
     ulEl.appendChild(liEl);
+    products[randomNumber].numberOfTimesDisplayed += 1;
     randomNumbersGenerated.push(randomNumber);
   }
+
   printSets.appendChild(ulEl);
   randomNumberSets.push(randomNumbersGenerated);
   setsDisplayed += 1;
@@ -74,7 +80,7 @@ function genRandomImage(max) {
   console.log('Number of sets displayed: ' + setsDisplayed);
 }
 
-function clickListener () {
+function clickListener (event) {
   console.log('Click listener fires!');
   genRandomImage(products.length);
 }
