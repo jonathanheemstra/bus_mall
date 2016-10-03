@@ -3,8 +3,13 @@ console.log('Connection Working!');
 
 var setsDisplayed = 0;
 var printSets = document.getElementById('products');
-var productImages = ['bag.jpg', 'banana.jpg', 'bathroom.jpg', 'boots.jpg', 'breakfast.jpg'];
+var products = [];
 
+function Products(productImages){
+  this.productImages = productImages;
+  console.log('img/' + this.productImages);
+  products.push(this);
+}
 
 function genRandomImage(max) {
   for (var i = 0; i < 3; i++) {
@@ -18,4 +23,10 @@ function genRandomImage(max) {
     printSets.appendChild(ulEl);
   }
 }
-genRandomImage(productImages.length);
+// genRandomImage(productImages.length);
+
+new Products('bag.jpg');
+new Products('banana.jpg');
+new Products('bathroom.jpg');
+new Products('boots.jpg');
+new Products('breakfast.jpg');
