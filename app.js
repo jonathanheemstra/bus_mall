@@ -7,9 +7,7 @@ Declare Data
 
 var setsDisplayed = 0;
 var printSets = document.getElementById('products');
-console.log(printSets);
 var productClicks = document.getElementById('products');
-console.log(productClicks);
 var products = [];
 var randomNumberSets = [];
 
