@@ -35,6 +35,7 @@ You are also responsible for the look and feel of the app, so don't forget a cus
 3. Set up JS global variables
   - Number of clicks
   - Images array
+  - Location to print to i.e. `getElementById`
 4. Set up JS random image selections
   - use `Math.random()` to get random number
   - set `Math.random()` to be a number between 1 and 19 using `Math.floor`
