@@ -7,6 +7,8 @@ var products = [];
 
 function Products(productImages){
   this.productImages = productImages;
+  this.numberOfTimesDisplayed = 0;
+  this.numberOfTimesClicked = 0;
   console.log('img/' + this.productImages);
   products.push(this);
 }
@@ -30,3 +32,18 @@ new Products('banana.jpg');
 new Products('bathroom.jpg');
 new Products('boots.jpg');
 new Products('breakfast.jpg');
+new Products('bubblegum.jpg');
+new Products('chair.jpg');
+new Products('cthulhu.jpg');
+new Products('dog-duck.jpg');
+new Products('dragon.jpg');
+new Products('pen.jpg');
+new Products('pet-sweep.jpg');
+new Products('scissors.jpg');
+new Products('shark.jpg');
+new Products('sweep.png');
+new Products('tauntaun.jpg');
+new Products('unicorn.jpg');
+new Products('usb.gif');
+new Products('water-can.jpg');
+new Products('wine-glass.jpg');
