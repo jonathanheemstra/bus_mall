@@ -1,8 +1,13 @@
 'use strict';
 console.log('Connection Working!');
 
+/************************
+Declare Data
+************************/
+
 var setsDisplayed = 0;
 var printSets = document.getElementById('products');
+var productClicks = document.getElementById('products')
 var products = [];
 var randomNumberSets = [];
 
@@ -43,7 +48,13 @@ new Products('water-can.jpg');
 new Products('wine-glass.jpg');
 console.log('Products Constructed!');
 
+/************************
+Define Actions
+************************/
+
+//Generate 3 random images
 function genRandomImage(max) {
+  printSets.innerHTML = '';
   var ulEl = document.createElement('ul');
   var randomNumbersGenerated = [];
   for (var i = 0; i < 3; i++) {
@@ -58,6 +69,18 @@ function genRandomImage(max) {
   }
   printSets.appendChild(ulEl);
   randomNumberSets.push(randomNumbersGenerated);
+  setsDisplayed += 1;
   console.log('3 random numbers pushed to array');
+  console.log('Number of sets displayed: ' + setsDisplayed);
 }
+
+function clickListener () {
+  console.log('Click listener fires!');
+  genRandomImage(products.length);
+}
+/************************
+Exectue Actions
+************************/
+
+productClicks.addEventListener('click', clickListener);
 genRandomImage(products.length);
