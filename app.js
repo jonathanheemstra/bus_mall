@@ -9,23 +9,10 @@ function Products(productImages){
   this.productImages = productImages;
   this.numberOfTimesDisplayed = 0;
   this.numberOfTimesClicked = 0;
-  console.log('img/' + this.productImages);
+  this.imageLocation = 'img/' + productImages;
+  console.log('Products Array Working!');
   products.push(this);
 }
-
-function genRandomImage(max) {
-  for (var i = 0; i < 3; i++) {
-    var randomNumber = Math.floor(Math.random() * (max - 0 + 1)) + 0;
-    var ulEl = document.createElement('ul');
-    var liEl = document.createElement('li');
-    var imgEl = document.createElement('img');
-    imgEl.src = 'img/' + productImages[randomNumber];
-    liEl.appendChild(imgEl);
-    ulEl.appendChild(liEl);
-    printSets.appendChild(ulEl);
-  }
-}
-// genRandomImage(productImages.length);
 
 new Products('bag.jpg');
 new Products('banana.jpg');
@@ -47,3 +34,18 @@ new Products('unicorn.jpg');
 new Products('usb.gif');
 new Products('water-can.jpg');
 new Products('wine-glass.jpg');
+
+function genRandomImage(max) {
+  var ulEl = document.createElement('ul');
+  for (var i = 0; i < 3; i++) {
+    var randomNumber = Math.floor(Math.random() * (max - 0 + 1)) + 0;
+    var liEl = document.createElement('li');
+    var imgEl = document.createElement('img');
+    imgEl.src = products[randomNumber].imageLocation;
+    liEl.appendChild(imgEl);
+    ulEl.appendChild(liEl);
+  }
+  printSets.appendChild(ulEl);
+  console.log('Generate 3 random images working!');
+}
+genRandomImage(products.length);
