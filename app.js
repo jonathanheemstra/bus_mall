@@ -38,23 +38,23 @@ Products.prototype.calcProductNumber = function () {
 new Products('bag.jpg','Bag');
 new Products('banana.jpg','Banana');
 new Products('bathroom.jpg','Bathroom');
-new Products('boots.jpg','Boots');
-new Products('breakfast.jpg','Breakfast');
-new Products('bubblegum.jpg','BubbleGum');
-new Products('chair.jpg','Chair');
-new Products('cthulhu.jpg','Cthulhu');
-new Products('dog-duck.jpg','Dog Duck');
-new Products('dragon.jpg','Dragon');
-new Products('pen.jpg','Pen');
-new Products('pet-sweep.jpg','Pet Sweeper');
-new Products('scissors.jpg','Scissors');
-new Products('shark.jpg','Shark');
-new Products('sweep.png','Sweep');
-new Products('tauntaun.jpg','Tauntaun');
-new Products('unicorn.jpg','Unicorn');
-new Products('usb.gif','USB');
-new Products('water-can.jpg','Water Can');
-new Products('wine-glass.jpg','Wine Glass');
+// new Products('boots.jpg','Boots');
+// new Products('breakfast.jpg','Breakfast');
+// new Products('bubblegum.jpg','BubbleGum');
+// new Products('chair.jpg','Chair');
+// new Products('cthulhu.jpg','Cthulhu');
+// new Products('dog-duck.jpg','Dog Duck');
+// new Products('dragon.jpg','Dragon');
+// new Products('pen.jpg','Pen');
+// new Products('pet-sweep.jpg','Pet Sweeper');
+// new Products('scissors.jpg','Scissors');
+// new Products('shark.jpg','Shark');
+// new Products('sweep.png','Sweep');
+// new Products('tauntaun.jpg','Tauntaun');
+// new Products('unicorn.jpg','Unicorn');
+// new Products('usb.gif','USB');
+// new Products('water-can.jpg','Water Can');
+// new Products('wine-glass.jpg','Wine Glass');
 
 /************************
 Define Actions
@@ -75,7 +75,9 @@ function genRandomImage(max) {
         repeatRandomNumber = true;
         while (repeatRandomNumber === true) {
           randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
-          if (randomNumber === randomNumbersGenerated[a]) {
+          if (randomNumber === randomNumbersGenerated[0]) {
+            repeatRandomNumber = true;
+          } else if (randomNumber === randomNumbersGenerated[1]) {
             repeatRandomNumber = true;
           } else {
             repeatRandomNumber = false;
@@ -129,9 +131,12 @@ function createList () {
     printSets.appendChild(h4El);
     var ulEl = document.createElement('ul');
     var liEl = document.createElement('li');
+    var liEl2 = document.createElement('li');
     liEl.setAttribute('class','results');
-    liEl.textContent = 'Number of times displayed: ' + products[i].numberOfTimesDisplayed + ' | ' + 'Number of times clicked: ' + products[i].numberOfTimesClicked;
+    liEl.textContent = 'Number of times displayed: ' + products[i].numberOfTimesDisplayed;
+    liEl2.textContent = 'Number of times clicked: ' + products[i].numberOfTimesClicked;
     ulEl.appendChild(liEl);
+    ulEl.appendChild(liEl2);
     printSets.appendChild(ulEl);
   }
 }
