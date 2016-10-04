@@ -16,6 +16,8 @@ var products = [];
 var randomNumberSets = [];
 var productNames = [];
 var numberOfTimesClicked = [];
+var productData = [];
+var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart'],['pie', 'See results in pie chart']];
 
 function Products(productImages, productName){
   this.productImages = productImages;
@@ -24,9 +26,9 @@ function Products(productImages, productName){
   this.imageLocation = 'img/' + productImages;
   this.productNumber = 0;
   this.productName = productName;
+  this.productData = [];
   this.calcProductNumber();
   this.findProductName();
-  this.findNumberOfTimesClicked();
   products.push(this);
 }
 Products.prototype.calcProductNumber = function () {
@@ -39,6 +41,10 @@ Products.prototype.findProductName = function () {
 };
 Products.prototype.findNumberOfTimesClicked = function () {
   numberOfTimesClicked.push(this.numberOfTimesClicked);
+};
+Products.prototype.createProductData = function () {
+  this.productData.push(this.numberOfTimesClicked, this.numberOfTimesDisplayed);
+  productData.push(this.productData);
 };
 
 new Products('bag.jpg','Bag');
@@ -66,8 +72,8 @@ new Products('wine-glass.jpg','Wine Glass');
 Define Actions
 ************************/
 function clickListener (event) {
-  if (setsDisplayed < 2) {
-    var clickedProduct = event.target.alt;
+  var clickedProduct = event.target.alt;
+  if (setsDisplayed < 25) {
     if (clickedProduct === undefined) {
       return alert('Please click on one of the images!');
     }
@@ -76,9 +82,17 @@ function clickListener (event) {
     console.clear();
     console.table(products);
   } else {
+    products[clickedProduct].numberOfTimesClicked += 1;
+    for (var i = 0; i < products.length; i++) {
+      products[i].findNumberOfTimesClicked();
+      products[i].createProductData();
+    }
     productClicks.removeEventListener('click', clickListener);
     createCanvas();
     drawData();
+    // createButtons();
+    console.clear();
+    console.table(products);
   }
 }
 
@@ -153,10 +167,26 @@ function createCanvas () {
   canvasEl.textContent = ' ';
   printSets.appendChild(canvasEl);
 }
+
+function createButtons () {
+  printSets.innerHTML = '';
+  var buttonEl = document.createElement('button');
+  buttonEl.setAttribute('id',chartTypes[0][0]);
+  buttonEl.textContent = chartTypes[0][1];
+  printSets.appendChild(buttonEl);
+  var buttonEl2 = document.createElement('button');
+  buttonEl2.setAttribute('id',chartTypes[1][0]);
+  buttonEl2.textContent = chartTypes[1][1];
+  printSets.appendChild(buttonEl2);
+  var buttonEl3 = document.createElement('button');
+  buttonEl3.setAttribute('id',chartTypes[2][0]);
+  buttonEl3.textContent = chartTypes[2][1];
+  printSets.appendChild(buttonEl3);
+}
+
 function drawData () {
   var ctx = document.getElementById('data').getContext('2d');
-  console.log(ctx);
-  var clickData = new Chart(ctx, {
+  new Chart(ctx, {
     type: 'bar',
     data: data,
     options: {
@@ -176,21 +206,61 @@ var data = {
   labels: productNames,
   datasets: [
     {
+      label: 'Number of times clicked',
       data: numberOfTimesClicked,
       backgroundColor: [
-
+        '#4A75E6',
+        '#EA2533',
+        '#FEBC1F',
+        '#4470E6',
+        '#08AF22',
+        '#4A75E6',
+        '#EA2533',
+        '#FEBC1F',
+        '#4470E6',
+        '#08AF22',
+        '#4A75E6',
+        '#EA2533',
+        '#FEBC1F',
+        '#4470E6',
+        '#08AF22',
+        '#4A75E6',
+        '#EA2533',
+        '#FEBC1F',
+        '#4470E6',
+        '#08AF22',
       ],
       borderColor: [
-
+        '#4065C7',
+        '#D1212E',
+        '#D9A01A',
+        '#3354AD',
+        '#056E15',
+        '#4065C7',
+        '#D1212E',
+        '#D9A01A',
+        '#3354AD',
+        '#056E15',
+        '#4065C7',
+        '#D1212E',
+        '#D9A01A',
+        '#3354AD',
+        '#056E15',
+        '#4065C7',
+        '#D1212E',
+        '#D9A01A',
+        '#3354AD',
+        '#056E15',
       ],
       borderWidth: 1,
     }]
-}
+};
 /************************
 Exectue Actions
 ************************/
 
 productClicks.addEventListener('click', clickListener);
+
 
 genRandomImage(products.length);
 console.table(products);
