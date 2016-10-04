@@ -34,23 +34,23 @@ Products.prototype.calcProductNumber = function () {
 new Products('bag.jpg','Bag');
 new Products('banana.jpg','Banana');
 new Products('bathroom.jpg','Bathroom');
-// new Products('boots.jpg','Boots');
-// new Products('breakfast.jpg','Breakfast');
-// new Products('bubblegum.jpg','BubbleGum');
-// new Products('chair.jpg','Chair');
-// new Products('cthulhu.jpg','Cthulhu');
-// new Products('dog-duck.jpg','Dog Duck');
-// new Products('dragon.jpg','Dragon');
-// new Products('pen.jpg','Pen');
-// new Products('pet-sweep.jpg','Pet Sweeper');
-// new Products('scissors.jpg','Scissors');
-// new Products('shark.jpg','Shark');
-// new Products('sweep.png','Sweep');
-// new Products('tauntaun.jpg','Tauntaun');
-// new Products('unicorn.jpg','Unicorn');
-// new Products('usb.gif','USB');
-// new Products('water-can.jpg','Water Can');
-// new Products('wine-glass.jpg','Wine Glass');
+new Products('boots.jpg','Boots');
+new Products('breakfast.jpg','Breakfast');
+new Products('bubblegum.jpg','BubbleGum');
+new Products('chair.jpg','Chair');
+new Products('cthulhu.jpg','Cthulhu');
+new Products('dog-duck.jpg','Dog Duck');
+new Products('dragon.jpg','Dragon');
+new Products('pen.jpg','Pen');
+new Products('pet-sweep.jpg','Pet Sweeper');
+new Products('scissors.jpg','Scissors');
+new Products('shark.jpg','Shark');
+new Products('sweep.png','Sweep');
+new Products('tauntaun.jpg','Tauntaun');
+new Products('unicorn.jpg','Unicorn');
+new Products('usb.gif','USB');
+new Products('water-can.jpg','Water Can');
+new Products('wine-glass.jpg','Wine Glass');
 
 /************************
 Define Actions
