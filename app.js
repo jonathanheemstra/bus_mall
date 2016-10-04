@@ -1,11 +1,7 @@
 /************************
 Remaining Problems
-1. Prevent repeat images from showing up at the same time
 2. Prevent images from being pulled back to back
-3. Print results to page
 ************************/
-
-
 
 'use strict';
 
@@ -59,6 +55,21 @@ new Products('bathroom.jpg','Bathroom');
 /************************
 Define Actions
 ************************/
+function clickListener (event) {
+  if (setsDisplayed < 25) {
+    var clickedProduct = event.target.alt;
+    if (clickedProduct === undefined) {
+      return alert('Please click on one of the images!');
+    }
+    products[clickedProduct].numberOfTimesClicked += 1;
+    genRandomImage(products.length);
+    console.clear();
+    console.table(products);
+  } else {
+    productClicks.removeEventListener('click', clickListener);
+    createList();
+  }
+}
 
 //Generate 3 random images
 function genRandomImage(max) {
@@ -93,7 +104,7 @@ function genRandomImage(max) {
     liEl.setAttribute('class',classes[i]);
     liEl.appendChild(imgEl);
     ulEl.appendChild(liEl);
-    products[randomNumber].numberOfTimesDisplayed += 1;
+    products[randomNumber].numberOfTimesDisplayed++;
   }
   genCurrentQuestionNumber();
   printSets.appendChild(ulEl);
@@ -107,21 +118,7 @@ function genCurrentQuestionNumber () {
 }
 
 
-function clickListener (event) {
-  var clickedProduct = event.target.alt;
-  if (clickedProduct === undefined) {
-    return alert('Please click on one of the images!');
-  }
-  products[clickedProduct].numberOfTimesClicked += 1;
-  genRandomImage(products.length);
-  console.clear();
-  console.table(products);
 
-  if (setsDisplayed > 25) {
-    productClicks.removeEventListener('click', clickListener);
-    createList();
-  }
-}
 
 function createList () {
   printSets.innerHTML = '';
