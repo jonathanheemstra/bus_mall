@@ -56,7 +56,7 @@ new Products('wine-glass.jpg','Wine Glass');
 Define Actions
 ************************/
 function clickListener (event) {
-  if (setsDisplayed < 25) {
+  if (setsDisplayed < 2) {
     var clickedProduct = event.target.alt;
     if (clickedProduct === undefined) {
       return alert('Please click on one of the images!');
@@ -67,7 +67,8 @@ function clickListener (event) {
     console.table(products);
   } else {
     productClicks.removeEventListener('click', clickListener);
-    createList();
+    createCanvas();
+    drawData();
   }
 }
 
@@ -138,6 +139,17 @@ function createList () {
   }
 }
 
+function createCanvas () {
+  printSets.innerHTML = '';
+  var canvasEl = document.createElement('canvas');
+  canvasEl.setAttribute('id', 'data');
+  canvasEl.textContent = ' ';
+  printSets.appendChild(canvasEl);
+}
+function drawData () {
+  var ctx = document.getElementById('data').getContext('2d');
+  console.log(ctx);
+}
 /************************
 Exectue Actions
 ************************/
