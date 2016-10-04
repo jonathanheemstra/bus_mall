@@ -8,7 +8,6 @@ Remaining Problems
 
 
 'use strict';
-console.log('Connection Working!');
 
 /************************
 Declare Data
@@ -56,7 +55,6 @@ new Products('unicorn.jpg','Unicorn');
 new Products('usb.gif','USB');
 new Products('water-can.jpg','Water Can');
 new Products('wine-glass.jpg','Wine Glass');
-console.log('Products Constructed!');
 
 /************************
 Define Actions
@@ -64,35 +62,28 @@ Define Actions
 
 //Generate 3 random images
 function genRandomImage(max) {
+  setsDisplayed += 1;
   printSets.innerHTML = '';
   var ulEl = document.createElement('ul');
   var randomNumbersGenerated = [];
   var classes = ['left','center','right'];
   var repeatRandomNumber = false;
-
   for (var i = 0; i < 3; i++) {
     var randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
-
     for (var a = 0; a < randomNumbersGenerated.length; a++) {
       if (randomNumber === randomNumbersGenerated[a]) {
         repeatRandomNumber = true;
-      }
-    }
-    while (repeatRandomNumber === true) {
-      randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
-      console.log('Repeat random ' + randomNumber);
-      for (a = 0; a < randomNumbersGenerated.length; a++) {
-        if (randomNumber === randomNumbersGenerated[a]) {
-          repeatRandomNumber = true;
-          console.log('Found repeat random number. Need to regen');
-        } else {
-          repeatRandomNumber = false;
+        while (repeatRandomNumber === true) {
+          randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
+          if (randomNumber === randomNumbersGenerated[a]) {
+            repeatRandomNumber = true;
+          } else {
+            repeatRandomNumber = false;
+          }
         }
       }
     }
-
     randomNumbersGenerated.push(randomNumber);
-    console.log('Random Product ' + (i + 1) + ': ' + randomNumber);
     var liEl = document.createElement('li');
     var imgEl = document.createElement('img');
     imgEl.src = products[randomNumber].imageLocation;
@@ -102,23 +93,27 @@ function genRandomImage(max) {
     ulEl.appendChild(liEl);
     products[randomNumber].numberOfTimesDisplayed += 1;
   }
-
+  genCurrentQuestionNumber();
   printSets.appendChild(ulEl);
   randomNumberSets.push(randomNumbersGenerated);
-  setsDisplayed += 1;
-  console.log('3 random numbers pushed to array');
-  console.log('Number of sets displayed: ' + setsDisplayed);
 }
+
+function genCurrentQuestionNumber () {
+  var h5El = document.createElement('h5');
+  h5El.textContent = 'Selection ' + setsDisplayed + ' of 25';
+  printSets.appendChild(h5El);
+}
+
 
 function clickListener (event) {
   var clickedProduct = event.target.alt;
-  console.log('Click listener fires!');
   if (clickedProduct === undefined) {
     return alert('Please click on one of the images!');
   }
-  console.log(clickedProduct);
   products[clickedProduct].numberOfTimesClicked += 1;
   genRandomImage(products.length);
+  console.clear();
+  console.table(products);
 
   if (setsDisplayed > 25) {
     productClicks.removeEventListener('click', clickListener);
@@ -148,3 +143,4 @@ Exectue Actions
 productClicks.addEventListener('click', clickListener);
 
 genRandomImage(products.length);
+console.table(products);
