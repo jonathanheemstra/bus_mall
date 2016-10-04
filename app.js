@@ -120,7 +120,7 @@ function clickListener (event) {
   products[clickedProduct].numberOfTimesClicked += 1;
   genRandomImage(products.length);
 
-  if (setsDisplayed > 5) {
+  if (setsDisplayed > 25) {
     productClicks.removeEventListener('click', clickListener);
     createList();
   }
