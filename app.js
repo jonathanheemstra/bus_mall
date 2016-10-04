@@ -58,9 +58,23 @@ function genRandomImage(max) {
   var ulEl = document.createElement('ul');
   var randomNumbersGenerated = [];
   var classes = ['left','center','right'];
+  var repeatRandomNumber = false;
 
   for (var i = 0; i < 3; i++) {
     var randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
+
+    for (var a = 0; a < randomNumbersGenerated.length; a++) {
+      if (randomNumbersGenerated[a] === randomNumber) {
+        repeatRandomNumber = true;
+        console.log('random number already generated: ' + randomNumber);
+      }
+    }
+
+    if (repeatRandomNumber === true) {
+      randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
+    }
+
+    randomNumbersGenerated.push(randomNumber);
     console.log('Random Product ' + (i + 1) + ': ' + randomNumber);
     var liEl = document.createElement('li');
     var imgEl = document.createElement('img');
@@ -70,7 +84,6 @@ function genRandomImage(max) {
     liEl.appendChild(imgEl);
     ulEl.appendChild(liEl);
     products[randomNumber].numberOfTimesDisplayed += 1;
-    randomNumbersGenerated.push(randomNumber);
   }
 
   printSets.appendChild(ulEl);
