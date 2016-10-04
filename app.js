@@ -80,9 +80,11 @@ function genRandomImage(max) {
     }
     while (repeatRandomNumber === true) {
       randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
+      console.log('Repeat random ' + randomNumber);
       for (a = 0; a < randomNumbersGenerated.length; a++) {
         if (randomNumber === randomNumbersGenerated[a]) {
           repeatRandomNumber = true;
+          console.log('Found repeat random number. Need to regen');
         } else {
           repeatRandomNumber = false;
         }
@@ -118,7 +120,7 @@ function clickListener (event) {
   products[clickedProduct].numberOfTimesClicked += 1;
   genRandomImage(products.length);
 
-  if (setsDisplayed > 25) {
+  if (setsDisplayed > 5) {
     productClicks.removeEventListener('click', clickListener);
     createList();
   }
@@ -132,8 +134,8 @@ function createList () {
     printSets.appendChild(h4El);
     var ulEl = document.createElement('ul');
     var liEl = document.createElement('li');
-    liEl.setAttribute('class','times_displayed');
-    liEl.textContent = 'Number of times displayed: ' + products[i].numberOfTimesDisplayed;
+    liEl.setAttribute('class','results');
+    liEl.textContent = 'Number of times displayed: ' + products[i].numberOfTimesDisplayed + ' | ' + 'Number of times clicked: ' + products[i].numberOfTimesClicked;
     ulEl.appendChild(liEl);
     printSets.appendChild(ulEl);
   }
