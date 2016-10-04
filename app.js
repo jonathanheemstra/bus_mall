@@ -14,6 +14,8 @@ var printSets = document.getElementById('products');
 var productClicks = document.getElementById('products');
 var products = [];
 var randomNumberSets = [];
+var productNames = [];
+var numberOfTimesClicked = [];
 
 function Products(productImages, productName){
   this.productImages = productImages;
@@ -23,12 +25,20 @@ function Products(productImages, productName){
   this.productNumber = 0;
   this.productName = productName;
   this.calcProductNumber();
+  this.findProductName();
+  this.findNumberOfTimesClicked();
   products.push(this);
 }
 Products.prototype.calcProductNumber = function () {
   for (var i = 0; i < products.length; i++) {
     this.productNumber = products.length;
   }
+};
+Products.prototype.findProductName = function () {
+  productNames.push(this.productName);
+};
+Products.prototype.findNumberOfTimesClicked = function () {
+  numberOfTimesClicked.push(this.numberOfTimesClicked);
 };
 
 new Products('bag.jpg','Bag');
@@ -118,9 +128,6 @@ function genCurrentQuestionNumber () {
   printSets.appendChild(h5El);
 }
 
-
-
-
 function createList () {
   printSets.innerHTML = '';
   for (var i = 0; i < products.length; i++) {
@@ -149,6 +156,35 @@ function createCanvas () {
 function drawData () {
   var ctx = document.getElementById('data').getContext('2d');
   console.log(ctx);
+  var clickData = new Chart(ctx, {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            stepSize: 1,
+          }
+        }]
+      }
+    }
+  });
+}
+
+var data = {
+  labels: productNames,
+  datasets: [
+    {
+      data: numberOfTimesClicked,
+      backgroundColor: [
+
+      ],
+      borderColor: [
+
+      ],
+      borderWidth: 1,
+    }]
 }
 /************************
 Exectue Actions
