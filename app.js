@@ -17,8 +17,7 @@ var randomNumberSets = [];
 var productNames = [];
 var numberOfTimesClicked = [];
 var productData = [];
-var tempRandomNumber = [];
-var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart'],['pie', 'See results in pie chart']];
+var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart']];
 
 function Products(productImages, productName){
   this.productImages = productImages;
@@ -54,20 +53,20 @@ new Products('bathroom.jpg','Bathroom');
 new Products('boots.jpg','Boots');
 new Products('breakfast.jpg','Breakfast');
 new Products('bubblegum.jpg','BubbleGum');
-// new Products('chair.jpg','Chair');
-// new Products('cthulhu.jpg','Cthulhu');
-// new Products('dog-duck.jpg','Dog Duck');
-// new Products('dragon.jpg','Dragon');
-// new Products('pen.jpg','Pen');
-// new Products('pet-sweep.jpg','Pet Sweeper');
-// new Products('scissors.jpg','Scissors');
-// new Products('shark.jpg','Shark');
-// new Products('sweep.png','Sweep');
-// new Products('tauntaun.jpg','Tauntaun');
-// new Products('unicorn.jpg','Unicorn');
-// new Products('usb.gif','USB');
-// new Products('water-can.jpg','Water Can');
-// new Products('wine-glass.jpg','Wine Glass');
+new Products('chair.jpg','Chair');
+new Products('cthulhu.jpg','Cthulhu');
+new Products('dog-duck.jpg','Dog Duck');
+new Products('dragon.jpg','Dragon');
+new Products('pen.jpg','Pen');
+new Products('pet-sweep.jpg','Pet Sweeper');
+new Products('scissors.jpg','Scissors');
+new Products('shark.jpg','Shark');
+new Products('sweep.png','Sweep');
+new Products('tauntaun.jpg','Tauntaun');
+new Products('unicorn.jpg','Unicorn');
+new Products('usb.gif','USB');
+new Products('water-can.jpg','Water Can');
+new Products('wine-glass.jpg','Wine Glass');
 
 /************************
 Define Actions
@@ -80,8 +79,8 @@ function clickListener (event) {
     }
     products[clickedProduct].numberOfTimesClicked += 1;
     genRandomImage(products.length);
-    // console.clear();
-    // console.table(products);
+    console.clear();
+    console.table(products);
   } else {
     products[clickedProduct].numberOfTimesClicked += 1;
     for (var i = 0; i < products.length; i++) {
@@ -90,8 +89,8 @@ function clickListener (event) {
     }
     productClicks.removeEventListener('click', clickListener);
     createButtons();
-    // console.clear();
-    // console.table(products);
+    console.clear();
+    console.table(products);
   }
 }
 
@@ -100,9 +99,6 @@ function buttonListener (event) {
   if (clickedButton === 'list') {
     createList();
   } else if (clickedButton === 'bar') {
-    createCanvas();
-    drawData();
-  } else if (clickedButton === 'pie') {
     createCanvas();
     drawData();
   }
@@ -115,6 +111,10 @@ function genRandomImage(max) {
   var randomNumbersGenerated = [];
   var classes = ['left','center','right'];
   var repeatRandomNumber = false;
+  // var adjustSetsDisplayed = setsDisplayed - 1;
+  // console.log(adjustSetsDisplayed);
+  // var repeatedSet = randomNumberSets[adjustSetsDisplayed];
+  // console.log(repeatedSet);
   for (var i = 0; i < 3; i++) {
     var randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
     for (var a = 0; a < randomNumbersGenerated.length; a++) {
@@ -125,8 +125,6 @@ function genRandomImage(max) {
           if (randomNumber === randomNumbersGenerated[0]) {
             repeatRandomNumber = true;
           } else if (randomNumber === randomNumbersGenerated[1]) {
-            repeatRandomNumber = true;
-          } else if (randomNumber === tempRandomNumber[0][0] || randomNumber === tempRandomNumber[0][1] || randomNumber === tempRandomNumber[0][2]) {
             repeatRandomNumber = true;
           } else {
             repeatRandomNumber = false;
@@ -147,10 +145,6 @@ function genRandomImage(max) {
   genCurrentQuestionNumber();
   printSets.appendChild(ulEl);
   randomNumberSets.push(randomNumbersGenerated);
-  if (setsDisplayed > 1) {
-    tempRandomNumber = [];
-  }
-  tempRandomNumber.push(randomNumbersGenerated);
 }
 
 function genCurrentQuestionNumber () {
@@ -195,10 +189,6 @@ function createButtons () {
   buttonEl2.setAttribute('id',chartTypes[1][0]);
   buttonEl2.textContent = chartTypes[1][1];
   printSets.appendChild(buttonEl2);
-  var buttonEl3 = document.createElement('button');
-  buttonEl3.setAttribute('id',chartTypes[2][0]);
-  buttonEl3.textContent = chartTypes[2][1];
-  printSets.appendChild(buttonEl3);
 }
 
 function drawData () {
@@ -280,4 +270,3 @@ productClicks.addEventListener('click', clickListener);
 productClicks.addEventListener('click', buttonListener);
 
 genRandomImage(products.length);
-// console.table(products);
