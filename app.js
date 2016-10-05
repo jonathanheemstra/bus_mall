@@ -17,6 +17,7 @@ var randomNumberSets = [];
 var productNames = [];
 var numberOfTimesClicked = [];
 var productData = [];
+var tempRandomNumber = [];
 var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart'],['pie', 'See results in pie chart']];
 
 function Products(productImages, productName){
@@ -88,14 +89,24 @@ function clickListener (event) {
       products[i].createProductData();
     }
     productClicks.removeEventListener('click', clickListener);
-    createCanvas();
-    drawData();
-    // createButtons();
+    createButtons();
     console.clear();
     console.table(products);
   }
 }
 
+function buttonListener (event) {
+  var clickedButton = event.target.id;
+  if (clickedButton === 'list') {
+    createList();
+  } else if (clickedButton === 'bar') {
+    createCanvas();
+    drawData();
+  } else if (clickedButton === 'pie') {
+    createCanvas();
+    drawData();
+  }
+}
 //Generate 3 random images
 function genRandomImage(max) {
   setsDisplayed += 1;
@@ -151,7 +162,7 @@ function createList () {
     var ulEl = document.createElement('ul');
     var liEl = document.createElement('li');
     var liEl2 = document.createElement('li');
-    liEl.setAttribute('class','results');
+    ulEl.setAttribute('class','results');
     liEl.textContent = 'Number of times displayed: ' + products[i].numberOfTimesDisplayed;
     liEl2.textContent = 'Number of times clicked: ' + products[i].numberOfTimesClicked;
     ulEl.appendChild(liEl);
@@ -260,7 +271,7 @@ Exectue Actions
 ************************/
 
 productClicks.addEventListener('click', clickListener);
-
+productClicks.addEventListener('click', buttonListener);
 
 genRandomImage(products.length);
 console.table(products);
