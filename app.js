@@ -19,12 +19,12 @@ var numberOfTimesClicked = [];
 var productData = [];
 var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart']];
 
-function Products(productImages, productName, timesClicked, timesDisplayed, productNumber){
+function Products(productImages, productName, timesClicked, timesDisplayed, productNumber){//timesClicked timesDisplayed and productNumber added to constructor function to help with issues relating to local storage items not pulling properly when running functions created for defined variables
   this.productImages = productImages;
-  this.numberOfTimesDisplayed = timesDisplayed || 0;
-  this.numberOfTimesClicked = timesClicked || 0;
+  this.numberOfTimesDisplayed = timesDisplayed || 0;//or statement that checks whether timesDisplayed has a value. if not gives it a value of 0
+  this.numberOfTimesClicked = timesClicked || 0; //or statement that checks whether timesClicked has a value. if not gives it a value of 0
   this.imageLocation = 'img/' + productImages;
-  this.productNumber = productNumber || 0;
+  this.productNumber = productNumber || 0; //or statement that checks whether productNumber has a value. if not gives it a value of 0
   this.productName = productName;
   this.productData = [];
   this.calcProductNumber();
@@ -46,11 +46,12 @@ Products.prototype.createProductData = function () {
   this.productData.push(this.numberOfTimesClicked, this.numberOfTimesDisplayed);
   productData.push(this.productData);
 };
-
+//newly added localStorage if statement checks if there is any products array available. If not runs product array created below
 if (localStorage.getItem('products')){
   var productsStringified = localStorage.getItem('products');
   var productsUnstringified = JSON.parse(productsStringified);
   console.log(productsUnstringified);
+  //for loop there to construct products pulled from local storage
   for (var i = 0; i < productsUnstringified.length; i++) {
     var currentProduct = productsUnstringified[i];
     new Products(currentProduct.productImages,
@@ -85,6 +86,7 @@ if (localStorage.getItem('products')){
 /************************
 Define Actions
 ************************/
+//stores product array in local storage
 function clickStorage(){
   console.log('clickStorage');
   var productsStringified = JSON.stringify(products);
