@@ -19,12 +19,12 @@ var numberOfTimesClicked = [];
 var productData = [];
 var chartTypes = [['list', 'See results as list'],['bar', 'See results in bar chart']];
 
-function Products(productImages, productName){
+function Products(productImages, productName, timesClicked, timesDisplayed, productNumber){//timesClicked timesDisplayed and productNumber added to constructor function to help with issues relating to local storage items not pulling properly when running functions created for defined variables
   this.productImages = productImages;
-  this.numberOfTimesDisplayed = 0;
-  this.numberOfTimesClicked = 0;
+  this.numberOfTimesDisplayed = timesDisplayed || 0;//or statement that checks whether timesDisplayed has a value. if not gives it a value of 0
+  this.numberOfTimesClicked = timesClicked || 0; //or statement that checks whether timesClicked has a value. if not gives it a value of 0
   this.imageLocation = 'img/' + productImages;
-  this.productNumber = 0;
+  this.productNumber = productNumber || 0; //or statement that checks whether productNumber has a value. if not gives it a value of 0
   this.productName = productName;
   this.productData = [];
   this.calcProductNumber();
@@ -46,31 +46,56 @@ Products.prototype.createProductData = function () {
   this.productData.push(this.numberOfTimesClicked, this.numberOfTimesDisplayed);
   productData.push(this.productData);
 };
+//newly added localStorage if statement checks if there is any products array available. If not runs product array created below
+if (localStorage.getItem('products')){
+  var productsStringified = localStorage.getItem('products');
+  var productsUnstringified = JSON.parse(productsStringified);
+  console.log(productsUnstringified);
+  //for loop there to construct products pulled from local storage
+  for (var i = 0; i < productsUnstringified.length; i++) {
+    var currentProduct = productsUnstringified[i];
+    new Products(currentProduct.productImages,
+                 currentProduct.productName, currentProduct.numberOfTimesClicked, currentProduct.numberOfTimesDisplayed, currentProduct.productNumber
+               ); //eslint-disable-line
+  }
+} else {
+  new Products('bag.jpg','Bag');
+  new Products('banana.jpg','Banana');
+  new Products('bathroom.jpg','Bathroom');
+  new Products('boots.jpg','Boots');
+  new Products('breakfast.jpg','Breakfast');
+  new Products('bubblegum.jpg','BubbleGum');
+  new Products('chair.jpg','Chair');
+  new Products('cthulhu.jpg','Cthulhu');
+  new Products('dog-duck.jpg','Dog Duck');
+  new Products('dragon.jpg','Dragon');
+  new Products('pen.jpg','Pen');
+  new Products('pet-sweep.jpg','Pet Sweeper');
+  new Products('scissors.jpg','Scissors');
+  new Products('shark.jpg','Shark');
+  new Products('sweep.png','Sweep');
+  new Products('tauntaun.jpg','Tauntaun');
+  new Products('unicorn.jpg','Unicorn');
+  new Products('usb.gif','USB');
+  new Products('water-can.jpg','Water Can');
+  new Products('wine-glass.jpg','Wine Glass');
+}
 
-new Products('bag.jpg','Bag');
-new Products('banana.jpg','Banana');
-new Products('bathroom.jpg','Bathroom');
-new Products('boots.jpg','Boots');
-new Products('breakfast.jpg','Breakfast');
-new Products('bubblegum.jpg','BubbleGum');
-new Products('chair.jpg','Chair');
-new Products('cthulhu.jpg','Cthulhu');
-new Products('dog-duck.jpg','Dog Duck');
-new Products('dragon.jpg','Dragon');
-new Products('pen.jpg','Pen');
-new Products('pet-sweep.jpg','Pet Sweeper');
-new Products('scissors.jpg','Scissors');
-new Products('shark.jpg','Shark');
-new Products('sweep.png','Sweep');
-new Products('tauntaun.jpg','Tauntaun');
-new Products('unicorn.jpg','Unicorn');
-new Products('usb.gif','USB');
-new Products('water-can.jpg','Water Can');
-new Products('wine-glass.jpg','Wine Glass');
+
 
 /************************
 Define Actions
 ************************/
+//stores product array in local storage
+function clickStorage(){
+  console.log('clickStorage');
+  var productsStringified = JSON.stringify(products);
+  localStorage.setItem('products', productsStringified);
+}
+
+
+
+
 function clickListener (event) {
   var clickedProduct = event.target.alt;
   if (setsDisplayed < 25) {
@@ -78,6 +103,7 @@ function clickListener (event) {
       return alert('Please click on one of the images!');
     }
     products[clickedProduct].numberOfTimesClicked += 1;
+    clickStorage();
     genRandomImage(products.length);
     console.clear();
     console.table(products);
@@ -87,6 +113,7 @@ function clickListener (event) {
       products[i].findNumberOfTimesClicked();
       products[i].createProductData();
     }
+    clickStorage();
     productClicks.removeEventListener('click', clickListener);
     createButtons();
     console.clear();
