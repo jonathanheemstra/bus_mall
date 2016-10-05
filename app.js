@@ -54,20 +54,20 @@ new Products('bathroom.jpg','Bathroom');
 new Products('boots.jpg','Boots');
 new Products('breakfast.jpg','Breakfast');
 new Products('bubblegum.jpg','BubbleGum');
-new Products('chair.jpg','Chair');
-new Products('cthulhu.jpg','Cthulhu');
-new Products('dog-duck.jpg','Dog Duck');
-new Products('dragon.jpg','Dragon');
-new Products('pen.jpg','Pen');
-new Products('pet-sweep.jpg','Pet Sweeper');
-new Products('scissors.jpg','Scissors');
-new Products('shark.jpg','Shark');
-new Products('sweep.png','Sweep');
-new Products('tauntaun.jpg','Tauntaun');
-new Products('unicorn.jpg','Unicorn');
-new Products('usb.gif','USB');
-new Products('water-can.jpg','Water Can');
-new Products('wine-glass.jpg','Wine Glass');
+// new Products('chair.jpg','Chair');
+// new Products('cthulhu.jpg','Cthulhu');
+// new Products('dog-duck.jpg','Dog Duck');
+// new Products('dragon.jpg','Dragon');
+// new Products('pen.jpg','Pen');
+// new Products('pet-sweep.jpg','Pet Sweeper');
+// new Products('scissors.jpg','Scissors');
+// new Products('shark.jpg','Shark');
+// new Products('sweep.png','Sweep');
+// new Products('tauntaun.jpg','Tauntaun');
+// new Products('unicorn.jpg','Unicorn');
+// new Products('usb.gif','USB');
+// new Products('water-can.jpg','Water Can');
+// new Products('wine-glass.jpg','Wine Glass');
 
 /************************
 Define Actions
@@ -80,8 +80,8 @@ function clickListener (event) {
     }
     products[clickedProduct].numberOfTimesClicked += 1;
     genRandomImage(products.length);
-    console.clear();
-    console.table(products);
+    // console.clear();
+    // console.table(products);
   } else {
     products[clickedProduct].numberOfTimesClicked += 1;
     for (var i = 0; i < products.length; i++) {
@@ -90,8 +90,8 @@ function clickListener (event) {
     }
     productClicks.removeEventListener('click', clickListener);
     createButtons();
-    console.clear();
-    console.table(products);
+    // console.clear();
+    // console.table(products);
   }
 }
 
@@ -126,6 +126,8 @@ function genRandomImage(max) {
             repeatRandomNumber = true;
           } else if (randomNumber === randomNumbersGenerated[1]) {
             repeatRandomNumber = true;
+          } else if (randomNumber === tempRandomNumber[0][0] || randomNumber === tempRandomNumber[0][1] || randomNumber === tempRandomNumber[0][2]) {
+            repeatRandomNumber = true;
           } else {
             repeatRandomNumber = false;
           }
@@ -145,6 +147,10 @@ function genRandomImage(max) {
   genCurrentQuestionNumber();
   printSets.appendChild(ulEl);
   randomNumberSets.push(randomNumbersGenerated);
+  if (setsDisplayed > 1) {
+    tempRandomNumber = [];
+  }
+  tempRandomNumber.push(randomNumbersGenerated);
 }
 
 function genCurrentQuestionNumber () {
@@ -274,4 +280,4 @@ productClicks.addEventListener('click', clickListener);
 productClicks.addEventListener('click', buttonListener);
 
 genRandomImage(products.length);
-console.table(products);
+// console.table(products);
