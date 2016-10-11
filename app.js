@@ -50,7 +50,6 @@ Products.prototype.createProductData = function () {
 if (localStorage.getItem('products')){
   var productsStringified = localStorage.getItem('products');
   var productsUnstringified = JSON.parse(productsStringified);
-  console.log(productsUnstringified);
   //for loop there to construct products pulled from local storage
   for (var i = 0; i < productsUnstringified.length; i++) {
     var currentProduct = productsUnstringified[i];
@@ -81,21 +80,16 @@ if (localStorage.getItem('products')){
   new Products('wine-glass.jpg','Wine Glass');
 }
 
-
-
 /************************
 Define Actions
 ************************/
 //stores product array in local storage
 function clickStorage(){
-  console.log('clickStorage');
   var productsStringified = JSON.stringify(products);
   localStorage.setItem('products', productsStringified);
 }
 
-
-
-
+//Image click event listener
 function clickListener (event) {
   var clickedProduct = event.target.alt;
   if (setsDisplayed < 25) {
@@ -105,8 +99,8 @@ function clickListener (event) {
     products[clickedProduct].numberOfTimesClicked += 1;
     clickStorage();
     genRandomImage(products.length);
-    console.clear();
-    console.table(products);
+    // console.clear();
+    // console.table(products);
   } else {
     products[clickedProduct].numberOfTimesClicked += 1;
     for (var i = 0; i < products.length; i++) {
@@ -116,11 +110,12 @@ function clickListener (event) {
     clickStorage();
     productClicks.removeEventListener('click', clickListener);
     createButtons();
-    console.clear();
-    console.table(products);
+    // console.clear();
+    // console.table(products);
   }
 }
 
+//Button click event listener
 function buttonListener (event) {
   var clickedButton = event.target.id;
   if (clickedButton === 'list') {
@@ -130,28 +125,56 @@ function buttonListener (event) {
     drawData();
   }
 }
+//Generate random numbers
+function genRandomNumber(max) {
+  return Math.floor(Math.random() * (max - 0)) + 0;
+}
+
+// function gen3RandomNumbers() {
+//   var randomNumbersGenerated2 = [];
+//   randomNumbersGenerated2.push(genRandomNumber(products.length));
+//   randomNumbersGenerated2.push(genRandomNumber(products.length));
+//   randomNumbersGenerated2.push(genRandomNumber(products.length));
+//   console.log('random numbers ' + randomNumbersGenerated2);
+// }
+
+function genContent(parent, child, innerContent) {
+  var parentEl = document.createElement(parent);
+  var childEl = document.createElement(child);
+  childEl.textContent = innerContent;
+  parentEl.appendChild(childEl);
+  printSets.appendChild(parentEl);
+}
+genContent('ul','li','Hello world');
+
 //Generate 3 random images
 function genRandomImage(max) {
+  var randomNumbersGenerated = [];
   setsDisplayed += 1;
   printSets.innerHTML = '';
   var ulEl = document.createElement('ul');
-  var randomNumbersGenerated = [];
   var classes = ['left','center','right'];
   var repeatRandomNumber = false;
-  // var adjustSetsDisplayed = setsDisplayed - 1;
-  // console.log(adjustSetsDisplayed);
-  // var repeatedSet = randomNumberSets[adjustSetsDisplayed];
-  // console.log(repeatedSet);
+  if (setsDisplayed > 1) {
+    var adjustSetsDisplayed = setsDisplayed - 2;
+    console.log('Adjusted sets displayed = ' + adjustSetsDisplayed);
+    var repeatedSet = randomNumberSets[adjustSetsDisplayed];
+    console.log(repeatedSet);
+  } else {
+    repeatedSet = '';
+  }
   for (var i = 0; i < 3; i++) {
     var randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
+    console.log(randomNumber);
     for (var a = 0; a < randomNumbersGenerated.length; a++) {
-      if (randomNumber === randomNumbersGenerated[a]) {
+      if (randomNumber === randomNumbersGenerated[a] || randomNumber === repeatedSet[0] || randomNumber === repeatedSet[1] || randomNumber === repeatedSet[2]) {
         repeatRandomNumber = true;
         while (repeatRandomNumber === true) {
           randomNumber = Math.floor(Math.random() * (max - 0)) + 0;
-          if (randomNumber === randomNumbersGenerated[0]) {
+          console.log(randomNumber);
+          if (randomNumber === randomNumbersGenerated[0] || randomNumber === repeatedSet[0] || randomNumber === repeatedSet[1] || randomNumber === repeatedSet[2]) {
             repeatRandomNumber = true;
-          } else if (randomNumber === randomNumbersGenerated[1]) {
+          } else if (randomNumber === randomNumbersGenerated[1] || randomNumber === repeatedSet[0] || randomNumber === repeatedSet[1] || randomNumber === repeatedSet[2]) {
             repeatRandomNumber = true;
           } else {
             repeatRandomNumber = false;
@@ -174,12 +197,14 @@ function genRandomImage(max) {
   randomNumberSets.push(randomNumbersGenerated);
 }
 
+//Create current Question number (1 through 25)
 function genCurrentQuestionNumber () {
   var h5El = document.createElement('h5');
   h5El.textContent = 'Selection ' + setsDisplayed + ' of 25';
   printSets.appendChild(h5El);
 }
 
+//Create list of click results
 function createList () {
   printSets.innerHTML = '';
   for (var i = 0; i < products.length; i++) {
@@ -198,6 +223,7 @@ function createList () {
   }
 }
 
+//Create canvas HTML tag
 function createCanvas () {
   printSets.innerHTML = '';
   var canvasEl = document.createElement('canvas');
@@ -206,6 +232,7 @@ function createCanvas () {
   printSets.appendChild(canvasEl);
 }
 
+//Create buttons that show after 25 click events have happened
 function createButtons () {
   printSets.innerHTML = '';
   var buttonEl = document.createElement('button');
@@ -218,6 +245,7 @@ function createButtons () {
   printSets.appendChild(buttonEl2);
 }
 
+//Draw data on canvas
 function drawData () {
   var ctx = document.getElementById('data').getContext('2d');
   new Chart(ctx, {
@@ -236,6 +264,7 @@ function drawData () {
   });
 }
 
+//create data array for use in drawing canvas data
 var data = {
   labels: productNames,
   datasets: [
@@ -292,8 +321,11 @@ var data = {
 /************************
 Exectue Actions
 ************************/
-
+//Click listeners
 productClicks.addEventListener('click', clickListener);
 productClicks.addEventListener('click', buttonListener);
 
+//Generate random 3 random images on page load
 genRandomImage(products.length);
+// gen3RandomNumbers(products.length);
+genContent('ul','li','Hello world');
